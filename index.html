@@ -21,16 +21,17 @@
     <div id="ClockContainer"></div>
   </body>
   <script>
+    const START_HOUR = 9;
     var currentTime = new moment();
     var ClockContainer = document.querySelector('#ClockContainer');
     var counter = 0;
     ClockContainer.innerHTML = moment().hour(0).minute(0).second(counter++).format('HH:mm:ss');
 
     var update = function() {
-      if (moment().hour() != 9){
-        console.log("not yet:", moment().hour())
+      if (!(moment().hour() >= START_HOUR)){
+        console.log("not yet:", moment().hour(), START_HOUR)
       } else {
-        console.log("GO!!!");
+        console.log("GO!!!", START_HOUR);
 
         ClockContainer.innerHTML = moment().hour(0).minute(0).second(counter++).format('HH:mm:ss');
       }
