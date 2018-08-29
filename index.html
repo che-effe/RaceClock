@@ -1,0 +1,45 @@
+<html>
+  <script src="moment.js"></script>
+  <style>
+    body{
+      height:100%;
+      width: 100%;
+      background: black;
+      color: white;
+      font-family: "alarm clock"
+    }
+    #ClockContainer {
+      top: 50%;
+      transform:translateY(-50%);
+      position:absolute;
+      text-align: center;
+      width:100%;
+      font-size: 24vw;
+    }
+  </style>
+  <body>
+    <div id="ClockContainer"></div>
+  </body>
+  <script>
+    var currentTime = new moment();
+    var ClockContainer = document.querySelector('#ClockContainer');
+    var counter = 0;
+    ClockContainer.innerHTML = moment().hour(0).minute(0).second(counter++).format('HH:mm:ss');
+
+    var update = function() {
+      if (moment().hour() != 9){
+        console.log("not yet:", moment().hour())
+      } else {
+        console.log("GO!!!");
+
+        ClockContainer.innerHTML = moment().hour(0).minute(0).second(counter++).format('HH:mm:ss');
+      }
+      setTimeout(function() {
+        update();
+        console.log(ClockContainer.innerHTML);
+      }.bind(this), 1000)
+    }
+    update();
+
+  </script>
+</html>
