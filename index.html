@@ -23,11 +23,16 @@
   </style>
   <body>
     <div id="ClockContainer"></div>
+    <audio autoplay id="voice" src="speech/raceBeings.mp3"></audio>
   </body>
   <script>
-    const START_HOUR = 9;
+    const START_HOUR = 10;
+    const EXPECTED_FINISH_MINUTE = "00:19:00";
+    var spoken1 = false;
+    var spoken2 = false;
     var currentTime = new moment();
     var ClockContainer = document.querySelector('#ClockContainer');
+    var voice = document.querySelector('#voice');
     var counter = 0;
     ClockContainer.innerHTML = moment().hour(0).minute(0).second(counter++).format('HH:mm:ss');
 
@@ -35,7 +40,37 @@
       if (!(moment().hour() >= START_HOUR)){
         console.log("not yet:", moment().hour(), START_HOUR)
       } else {
-        console.log("GO!!!", START_HOUR);
+        console.log("MINUTE!!",moment().minute(), EXPECTED_FINISH_MINUTE);
+        if ((ClockContainer.innerHTML == EXPECTED_FINISH_MINUTE)){
+          console.log("MINUTE!!",moment().minute(), EXPECTED_FINISH_MINUTE);
+          if (!spoken2){
+            console.log("Play approach!!");
+            spoken2 = true;
+            voice.src = "speech/approach.mp3";
+            voice.play();
+            setTimeout(function(){
+              voice.src = "speech/getReady.mp3";
+            voice.play();
+            }.bind(this), 3500)
+
+          }
+        }
+
+        if (!spoken1){
+          
+          spoken1 = true;
+          voice.src = "speech/racebegins.mp3";
+          voice.play();
+          setTimeout(function(){
+            voice.src = "speech/timeExpectation.mp3";
+            voice.play();
+            setTimeout(function(){
+              voice.src = "speech/getReady.mp3";
+              voice.play();
+            }.bind(this), 5500)
+          }.bind(this), 1500)
+        }
+       
 
         ClockContainer.innerHTML = moment().hour(0).minute(0).second(counter++).format('HH:mm:ss');
       }
